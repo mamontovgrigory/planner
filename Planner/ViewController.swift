@@ -5,6 +5,10 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        for i in 0...100000 {
+            print(i);
+        }
         // Do any additional setup after loading the view, typically from a nib.
     }
 
