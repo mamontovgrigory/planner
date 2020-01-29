@@ -1,14 +1,14 @@
-//
-//  TaskListController.swift
-//  Planner
-//
-//  Created by Григорий Мамонтов on 29.01.2020.
-//  Copyright © 2020 Tim. All rights reserved.
-//
-
 import UIKit
 
 class TaskListController: UITableViewController {
+    
+    private var taskList:[Task] = [
+        Task(name: "task 1", category: "category 1"),
+        Task(name: "task 2", category: "category 1", priority: Priority.Critical, deadline: Date()),
+        Task(name: "task 3", category: "category 1", priority: Priority.Alarming),
+        Task(name: "task 4", category: "category 1"),
+        Task(name: "task 5", category: "category 1")
+    ]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,18 +27,38 @@ class TaskListController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return taskList.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "testCell", for: indexPath)
 
         // Configure the cell...
-
-        cell.textLabel?.text = "test value"
         
+        let task = taskList[indexPath.row]
+
+        cell.textLabel?.text = task.name + " " + task.priority.rawValue
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .long
+        dateFormatter.timeStyle = .short
+        
+        var text = task.category
+        if let deadline = task.deadline {
+            text += " " + dateFormatter.string(from: deadline)
+        }
+        cell.detailTextLabel?.text = text
+                
         return cell
     }
+    
+    /*override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "Section " + String(section)
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 50
+    }*/
 
     /*
     // Override to support conditional editing of the table view.
